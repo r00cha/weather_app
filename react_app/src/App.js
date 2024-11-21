@@ -12,8 +12,8 @@ function App() {
         params: {
           latitude: '38.7167', // Example latitude for Lisbon
           longitude: '-9.1333', // Example longitude for Lisbon
-          start_date: '2024-11-17',
-          end_date: '2024-11-18',
+          start_date: '2024-11-06',
+          end_date: '2024-11-06',
         },
       });
       setWeatherData(response.data);
