@@ -1,17 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001/api/v1/weather';
+const API_URL = 'http://localhost:3001/api/v1/cities';
+
+function CitySelector({ onSelectCity }) {
+  const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState('');
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get(API_URL);
+        setCities(response.data);
+      } catch (error) {
+        console.error('Error fetching cities:', error);
+      }
+    };
+
+    fetchCities();
+  }, []);
+
+  const handleChange = (event) => {
+    const city = cities.find(c => c.name === event.target.value);
+    setSelectedCity(event.target.value);
+    if (city) onSelectCity(city);
+  };
+
+  return (
+    <div>
+      <h1>Select a City</h1>
+      <select value={selectedCity} onChange={handleChange}>
+        <option value="">-- Select a City --</option>
+        {cities.map((city) => (
+          <option key={city.id} value={city.name}>
+            {city.name}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
 
-  const fetchWeather = async () => {
+  const fetchWeather = async (city) => {
     try {
-      const response = await axios.get(API_URL, {
+      const response = await axios.get('http://localhost:3001/api/v1/weather', {
         params: {
-          latitude: '38.71667', // Example latitude for Lisbon
-          longitude: '-9.13333', // Example longitude for Lisbon
+          latitude: city.latitude,
+          longitude: city.longitude,
           start_date: '2024-11-06',
           end_date: '2024-11-06',
         },
@@ -24,11 +63,10 @@ function App() {
 
   return (
     <div>
-      <h1>Weather App</h1>
-      <button onClick={fetchWeather}>Get Weather</button>
+      <CitySelector onSelectCity={fetchWeather} />
       {weatherData && (
         <div>
-          <h2>Weather Data</h2>
+          <h1>Weather Data</h1>
           <p>Latitude: {weatherData.latitude}</p>
           <p>Longitude: {weatherData.longitude}</p>
           <h3>Hourly Data</h3>
@@ -53,5 +91,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
