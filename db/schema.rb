@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_21_142301) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_21_161024) do
   create_table "weather_records", force: :cascade do |t|
-    t.string "location"
-    t.date "date"
-    t.float "temperature"
-    t.float "precipitation"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "date_range"
+    t.json "hourly"
   end
 
 end

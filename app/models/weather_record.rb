@@ -1,18 +1,20 @@
 class WeatherRecord < ApplicationRecord
-
-  validates :location, presence: true
-  validates :date, presence: true
-  validates :temperature, numericality: true, allow_nil: true
-  validates :precipitation, numericality: true, allow_nil: true
+  validates :latitude, presence: true, numericality: true
+  validates :longitude, presence: true, numericality: true
+  validates :date_range, presence: true
+  validates :hourly, presence: true
 
   
   # Find records based on location and date range
-  def self.find_records(location, start_date, end_date)
+
+  def self.find_records(latitude, longitude, start_date, end_date)
     where(
-      location: location,
-      date: start_date..end_date
-    )
+      latitude: latitude,
+      longitude: longitude,
+      date_range: "#{start_date} to #{end_date}"
+    ).first
   end
+
 
   # Format the date for display
   def formatted_date

@@ -10,8 +10,8 @@ function App() {
     try {
       const response = await axios.get(API_URL, {
         params: {
-          latitude: '38.7167', // Example latitude for Lisbon
-          longitude: '-9.1333', // Example longitude for Lisbon
+          latitude: '38.71667', // Example latitude for Lisbon
+          longitude: '-9.13333', // Example longitude for Lisbon
           start_date: '2024-11-06',
           end_date: '2024-11-06',
         },
