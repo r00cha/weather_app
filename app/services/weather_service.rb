@@ -15,12 +15,16 @@ class WeatherService
       date: start_date..end_date
      )
 
-    if existing_records.any?
-      Rails.logger.info("DATA ALREADY EXISTS IN DATABASE")
+     # Log start date and end date
+    Rails.logger.info("START DATE: #{start_date}")
+    Rails.logger.info("END DATE: #{end_date}")
+
+    #if existing_records.any?
+     # Rails.logger.info("DATA ALREADY EXISTS IN DATABASE")
 
       # Return stored data if available
-      return existing_records.map { |record| { date: record.date, temperature: record.temperature, precipitation: record.precipitation } }
-    end
+      #return existing_records.map { |record| { date: record.date, temperature: record.temperature, precipitation: record.precipitation } }
+    #end
     
     # Otherwise, fetch data from the API
 
@@ -28,13 +32,15 @@ class WeatherService
 
 
     # Construct the API URL with the provided parameters
-    url = URI("https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=#{location[:latitude]}&longitude=#{location[:longitude]}&start=#{start_date}&end=#{end_date}&hourly=temperature_2m")
-
+    url = URI("https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=#{location[:latitude]}&longitude=#{location[:longitude]}&start_date=#{start_date}&end_date=#{end_date}&hourly=temperature_2m")
     # Make the HTTP request
     response = Net::HTTP.get(url)
 
     # Parse the JSON response
     data = JSON.parse(response)
+
+    # Log the response for debugging
+    Rails.logger.info(data)
 
     # Save the data to the database for future use
     hourly_data = data["hourly"]
