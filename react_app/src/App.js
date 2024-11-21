@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const API_URL = 'http://localhost:3001/api/v1/weather';
+
 function App() {
   const [weatherData, setWeatherData] = useState(null);
 
   const fetchWeather = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/weather', {
+      const response = await axios.get(API_URL, {
         params: {
           latitude: '38.7167', // Example latitude for Lisbon
           longitude: '-9.1333', // Example longitude for Lisbon
