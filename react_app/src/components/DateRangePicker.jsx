@@ -22,11 +22,12 @@ function DateRangePicker({ onSelectRange }) {
     };
 
     return (
-        <div>
-            <label className="text-lg font-medium text-gray-900">
+        <div className="flex flex-col items-center justify-center">
+            <label className="pt-4 pb-2 self-start text-lg font-medium text-gray-900">
                 Select a Date Range
             </label>
             <DateRange
+                className="w-full"
                 ranges={range}
                 onChange={handleSelect}
                 locale={enUS} // Pass the locale here
