@@ -1,5 +1,5 @@
-import React from 'react';
-import { Line } from 'react-chartjs-2';
+import React from "react";
+import { Line } from "react-chartjs-2";
 import {
     Chart as ChartJS,
     LineElement,
@@ -9,7 +9,7 @@ import {
     Tooltip,
     CategoryScale,
     Legend,
-} from 'chart.js';
+} from "chart.js";
 
 ChartJS.register(
     LineElement,
@@ -23,13 +23,13 @@ ChartJS.register(
 
 function WeatherChart({ hourlyData }) {
     const allLabels = hourlyData.time.map((time) =>
-        new Date(time).toLocaleString('en-US', {
-            weekday: 'short',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hourCycle: 'h23',
+        new Date(time).toLocaleString("en-US", {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hourCycle: "h23",
         })
     );
 
@@ -42,18 +42,18 @@ function WeatherChart({ hourlyData }) {
     const formattedLabels = hourlyData.time.map((time) => {
         const date = new Date(time);
         if (isSingleDay) {
-            return date.toLocaleString('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
+            return date.toLocaleString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
             });
         } else {
-            return date.toLocaleString('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric',
+            return date.toLocaleString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
             });
         }
     });
@@ -71,15 +71,24 @@ function WeatherChart({ hourlyData }) {
         labels: allLabels, // All data points for precise plotting
         datasets: [
             {
-                label: 'Temperature (°C)',
+                label: "Temperature (°C)",
                 data: hourlyData.temperature_2m,
-                //borderColor: 'rgba(75, 192, 192, 1)',
                 borderColor: "#ff0000",
-                //backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 backgroundColor: "#ff9999",
                 tension: 0.4,
                 pointRadius: 3,
                 pointHoverRadius: 6,
+                yAxisID: "y", // Use primary Y-axis for temperature
+            },
+            {
+                label: "Precipitation (mm)",
+                data: hourlyData.precipitation,
+                borderColor: "#0000ff",
+                backgroundColor: "#9999ff",
+                tension: 0.4,
+                pointRadius: 3,
+                pointHoverRadius: 6,
+                yAxisID: "y1", // Use secondary Y-axis for precipitation
             },
         ],
     };
@@ -90,21 +99,24 @@ function WeatherChart({ hourlyData }) {
             tooltip: {
                 callbacks: {
                     label: (context) => {
-                        const temp = context.raw;
-                        return `Temperature: ${temp}°C`;
+                        if (context.dataset.label === "Temperature (°C)") {
+                            return `Temperature: ${context.raw}°C`;
+                        } else if (context.dataset.label === "Precipitation (mm)") {
+                            return `Precipitation: ${context.raw} mm`;
+                        }
                     },
                 },
             },
             legend: {
                 display: true,
-                position: 'top',
+                position: "top",
             },
         },
         scales: {
             x: {
                 title: {
                     display: true,
-                    text: 'Time',
+                    text: "Time",
                 },
                 ticks: {
                     autoSkip: true,
@@ -116,9 +128,20 @@ function WeatherChart({ hourlyData }) {
             y: {
                 title: {
                     display: true,
-                    text: 'Temperature (°C)',
+                    text: "Temperature (°C)",
                 },
                 beginAtZero: true,
+            },
+            y1: {
+                title: {
+                    display: true,
+                    text: "Precipitation (mm)",
+                },
+                beginAtZero: true,
+                position: "right", // Place on the right side
+                grid: {
+                    drawOnChartArea: false, // Prevent grid lines from overlapping
+                },
             },
         },
     };

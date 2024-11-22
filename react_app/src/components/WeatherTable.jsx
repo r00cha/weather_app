@@ -18,7 +18,7 @@ function WeatherTable({ hourlyData }) {
         }
     };
 
-    // Format time to "06-11-2024 @ 12:00"
+    // Format time to "06-11-2024 - 12:00"
     const formatTime = (time) => {
         const date = new Date(time);
         const options = { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" };
@@ -29,6 +29,7 @@ function WeatherTable({ hourlyData }) {
     const startIndex = (currentPage - 1) * recordsPerPage;
     const currentRecords = hourlyData.time.slice(startIndex, startIndex + recordsPerPage);
     const currentTemperatures = hourlyData.temperature_2m.slice(startIndex, startIndex + recordsPerPage);
+    const currentPrecipitation = hourlyData.precipitation.slice(startIndex, startIndex + recordsPerPage);
 
     return (
         <div className="relative overflow-x-auto">
@@ -40,6 +41,9 @@ function WeatherTable({ hourlyData }) {
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Temperature (°C)
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Precipitation (mm)
                         </th>
                     </tr>
                 </thead>
@@ -56,6 +60,9 @@ function WeatherTable({ hourlyData }) {
                             <td className="px-6 py-4">
                                 {currentTemperatures[index]}
                             </td>
+                            <td className="px-6 py-4">
+                                {currentPrecipitation[index]}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -66,8 +73,8 @@ function WeatherTable({ hourlyData }) {
                     onClick={handlePrevPage}
                     disabled={currentPage === 1}
                     className={`px-4 py-2 mr-2 ${currentPage === 1
-                        ? "bg-gray-300 cursor-not-allowed"
-                        : "bg-blue-500 hover:bg-blue-700 text-white"
+                            ? "bg-gray-300 cursor-not-allowed"
+                            : "bg-blue-500 hover:bg-blue-700 text-white"
                         } rounded`}
                 >
                     Previous
@@ -76,8 +83,8 @@ function WeatherTable({ hourlyData }) {
                     onClick={handleNextPage}
                     disabled={currentPage === totalPages}
                     className={`px-4 py-2 ${currentPage === totalPages
-                        ? "bg-gray-300 cursor-not-allowed"
-                        : "bg-blue-500 hover:bg-blue-700 text-white"
+                            ? "bg-gray-300 cursor-not-allowed"
+                            : "bg-blue-500 hover:bg-blue-700 text-white"
                         } rounded`}
                 >
                     Next

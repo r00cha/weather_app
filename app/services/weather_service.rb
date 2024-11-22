@@ -31,10 +31,8 @@ class WeatherService
 
 
     # Construct the API URL with the provided parameters
-    url = URI("https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=#{location_obj.latitude}&longitude=#{location_obj.longitude}&start_date=#{start_date}&end_date=#{end_date}&hourly=temperature_2m")
-    
-    Rails.logger.info("MAKING HTTP REQUEST TO API")
-    Rails.logger.info(url)
+    url = URI("https://historical-forecast-api.open-meteo.com/v1/forecast?latitude=#{location_obj.latitude}&longitude=#{location_obj.longitude}&start_date=#{start_date}&end_date=#{end_date}&hourly=temperature_2m,precipitation")
+
 
     # Make the HTTP request
     response = Net::HTTP.get(url)

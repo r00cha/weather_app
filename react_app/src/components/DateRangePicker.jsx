@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; // Main stylesheet
 import "react-date-range/dist/theme/default.css"; // Theme stylesheet
-import { addDays } from "date-fns";
 import enUS from "date-fns/locale/en-US"; // Import the desired locale
 
 function DateRangePicker({ onSelectRange }) {
     const [range, setRange] = useState([
         {
-            startDate: new Date("2024-11-06"), // Default start date: November 6, 2024
-            endDate: new Date("2024-11-09"), // Default end date: November 6, 2024
+            startDate: new Date("2024-03-06"), // Default start date: November 6, 2024
+            endDate: new Date("2024-03-09"), // Default end date: November 6, 2024
             key: "selection",
         },
     ]);

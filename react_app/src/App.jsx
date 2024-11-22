@@ -12,8 +12,8 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [dateRange, setDateRange] = useState({
-    start_date: "2024-11-06",
-    end_date: "2024-11-09",
+    start_date: "2024-03-06",
+    end_date: "2024-03-09",
   });
   const [loading, setLoading] = useState(false); // New loading state
 
