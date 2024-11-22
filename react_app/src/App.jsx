@@ -89,13 +89,18 @@ function App() {
         </div>
 
         {/* Data Display */}
-        <div className="shadow-xl rounded-3xl col-span-3 bg-[#fff] p-4 flex flex-col overflow-y-auto">
+        <div className="p-5 pt-8 shadow-xl rounded-3xl col-span-3 bg-[#fff] p-4 flex flex-col overflow-y-auto">
           <h1 className="text-2xl font-semibold">Data Display</h1>
           {weatherData ? (
             <div>
-              <h1 className="text-xl font-semibold mt-4">Weather Data</h1>
-              <p>Latitude: {weatherData.latitude}</p>
-              <p>Longitude: {weatherData.longitude}</p>
+              <p className="text-lg mt-2">
+                Weather information for
+                <span className="font-semibold text-blue-500"> {selectedLocation.name} </span>
+                (Latitude: <span className="font-semibold">{weatherData.latitude}</span>,
+                Longitude: <span className="font-semibold">{weatherData.longitude}</span>)
+                from <span className="font-semibold">{dateRange.start_date} </span>
+                to <span className="font-semibold">{dateRange.end_date}</span>.
+              </p>
               <WeatherChart hourlyData={weatherData.hourly} />
               <WeatherTable hourlyData={weatherData.hourly} />
             </div>
@@ -111,6 +116,7 @@ function App() {
             </div>
           )}
         </div>
+
       </div>
 
       {/* Loading Spinner Modal */}
