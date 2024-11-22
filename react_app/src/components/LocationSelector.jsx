@@ -36,9 +36,9 @@ function LocationSelector({ onSelectLocation: onSelectLocation }) {
 
   return (
     <div>
-      <h1>Select a Location</h1>
-      <select value={selectedLocation} onChange={handleChange}>
-        <option value="">-- Select a Location --</option>
+      <label className="mb-1 text-lg font-medium text-gray-900">Select a location</label>
+      <select value={selectedLocation} onChange={handleChange} className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '>
+        <option value="">-- Select one --</option>
         {locations.map((location) => (
           <option key={location.id} value={location.name}>
             {location.name}
